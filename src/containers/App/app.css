@@ -1,0 +1,15 @@
+.app-container {
+  width: 100%;
+  height: auto;
+}
+.app-header {
+ height: 56px;
+ background-color: #f6f6f6;
+ border-bottom: 1px solid #ccc;
+}
+
+.main-content {
+  width: 1200px;
+  height: 1200px;
+  margin: 0 auto;
+}
