@@ -1,0 +1,24 @@
+.canvas-area {
+  width: 600px;
+  height: 400px;
+  margin:  40px;
+  position: relative;
+  background-color: #898989;
+}
+
+.snake-food {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background-color: #fff;
+  /* animation: twinkle 1s ease-in-out infinite; */
+}
+
+/* @keyframes twinkle {
+  from, to {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #898989;
+  }
+} */

@@ -1,0 +1,13 @@
+.snake-boay {
+  overflow: hidden;
+}
+.snake-boay i {
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+}
+/* .snake-boay i:first-child {
+  background-color: #f00;
+} */
