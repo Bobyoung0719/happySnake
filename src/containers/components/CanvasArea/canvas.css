@@ -1,7 +1,7 @@
 .canvas-area {
   width: 600px;
   height: 400px;
-  margin: 20px auto auto 40px;
+  margin: 20px auto auto;
   position: relative;
   border-radius: 2px;
   box-shadow: 0px 0px 12px #e6e6e6;

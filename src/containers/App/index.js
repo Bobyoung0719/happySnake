@@ -180,7 +180,6 @@ class App extends Component {
 
     return (
       <div className="app-container">
-      <div className="app-header">愤怒的贪吃蛇，biubiubiu～～～</div>
       <CanvasArea {...this.state} />
       <div className="control-area">
         <div className="other-handle">
