@@ -189,11 +189,11 @@ class App extends Component {
           <button className="restart" onClick={this.handleResume}>复位按钮</button>
         </div>
         <div className="difficulty">
-          <div className="choose">选择难度</div>
+          <div className="choose">选择游戏速度</div>
           <div className="btn">
             <button onClick={() => this.chooseSpeed(800)} className={chooseArr[0] ? "actived" : null}>我要步行</button>
-            <button onClick={() => this.chooseSpeed(600)} className={chooseArr[1] ? "actived" : null}>自行车</button>
-            <button onClick={() => this.chooseSpeed(400)} className={chooseArr[2] ? "actived" : null}>我要汽车</button>
+            <button onClick={() => this.chooseSpeed(600)} className={chooseArr[1] ? "actived" : null}>骑自行车</button>
+            <button onClick={() => this.chooseSpeed(400)} className={chooseArr[2] ? "actived" : null}>我要飙车</button>
             <button onClick={() => this.chooseSpeed(200)} className={chooseArr[3] ? "actived" : null}>我要上天</button>
           </div>
         </div>
