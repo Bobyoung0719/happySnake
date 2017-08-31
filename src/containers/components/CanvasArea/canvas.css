@@ -1,24 +1,24 @@
 .canvas-area {
   width: 600px;
   height: 400px;
-  margin:  40px;
+  margin: 20px auto auto 40px;
   position: relative;
-  background-color: #898989;
+  border-radius: 2px;
+  box-shadow: 0px 0px 12px #e6e6e6;
 }
 
 .snake-food {
   width: 10px;
   height: 10px;
   position: absolute;
-  background-color: #fff;
-  /* animation: twinkle 1s ease-in-out infinite; */
+  animation: twinkle 1s ease-in-out infinite;
 }
 
-/* @keyframes twinkle {
+@keyframes  twinkle{
   from, to {
-    background-color: #fff;
+    background-color: #56b962;
   }
   50% {
-    background-color: #898989;
+    background-color: #fff;
   }
-} */
+}

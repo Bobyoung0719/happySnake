@@ -4,10 +4,11 @@
 .snake-boay i {
   position: absolute;
   display: block;
+  z-index: 5;
   width: 10px;
   height: 10px;
-  background-color: #fff;
+  background-color: #56b962;
 }
-/* .snake-boay i:first-child {
-  background-color: #f00;
-} */
+.snake-boay i:first-child {
+  background-color: #489c52;
+}

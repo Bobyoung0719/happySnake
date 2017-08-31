@@ -6,10 +6,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      btnText: '开始',
       isTatrt: false,
       direction: null,
       over: false,
+      period: 1000,
+      chooseArr: [0, 0, 0, 0],
       snake: [{x: 6, y: 8}, {x: 5, y: 8}, {x: 4, y: 8}],
       food: {x: 19, y: 12}
     }
@@ -17,6 +18,7 @@ class App extends Component {
     this.start = this.start.bind(this);
     this.pause = this.pause.bind(this);
     this.foodPos = this.foodPos.bind(this);
+    this.chooseSpeed = this.chooseSpeed.bind(this);
     this.handleMoveUp = this.handleMoveUp.bind(this);
     this.handleMoveRight = this.handleMoveRight.bind(this);
     this.handleMoveDown = this.handleMoveDown.bind(this);
@@ -26,34 +28,46 @@ class App extends Component {
 
   // 开始
   start() {
-    const { btnText, snake, food, direction, isTatrt } = this.state;
-
+    const { snake, food, direction, isTatrt, period } = this.state;
     this.setState({ isTatrt: true });
+    clearInterval(this.timer);
+
+    /**
+     * 这里的代码 可以通过snake的长度自动设置速度
+     */
+    // const snakeLength = snake.length;
+    // let period = 1000;
+    // if (snakeLength >10 && snakeLength <= 20) {
+    //   period = 800;
+    // } else if (snakeLength >20 && snakeLength <= 30) {
+    //   period = 500;
+    // } else if (snakeLength >30 && snakeLength <= 50) {
+    //   period = 300;
+    // }
 
     this.timer = setInterval(() => {
       const snakeHeadX = snake[0].x, snakeHeadY = snake[0].y;
-
-      if(snakeHeadX <= 0 || snakeHeadX >= 59 || snakeHeadY <= 0 || snakeHeadY >= 39) {
+      
+      if(snakeHeadX <= 0 || snakeHeadX >= 59 || snakeHeadY <= 0 || snakeHeadY >= 39 ) {
         this.setState({ over: true });
-        alert('死了');
         clearInterval(this.timer);
-      } else {
-        if (direction === 'right' || direction === null) {
-          snake.unshift({x: snakeHeadX + 1, y: snakeHeadY});
-        } else if (direction === 'left') {
-          snake.unshift({x: snakeHeadX - 1, y: snakeHeadY});
-        } else if (direction === 'up') {
-          snake.unshift({x: snakeHeadX, y: snakeHeadY - 1});
-        } else if (direction === 'down') {
-          snake.unshift({x: snakeHeadX, y: snakeHeadY + 1});
-        }
-        (snakeHeadX === food.x && snakeHeadY === food.y) ? this.foodPos() : snake.pop();
-        this.setState({ snake });
-        // let indexs = snake.find(val => val.x ===  snakeHeadX);
-        // // console.log(indexs, 2);
+        alert('你的蛇阵亡啦！请重新开始游戏~');
+        return;
+      }
+
+      if (direction === 'right' || direction === null) {
+        snake.unshift({x: snakeHeadX + 1, y: snakeHeadY});
+      } else if (direction === 'left') {
+        snake.unshift({x: snakeHeadX - 1, y: snakeHeadY});
+      } else if (direction === 'up') {
+        snake.unshift({x: snakeHeadX, y: snakeHeadY - 1});
+      } else if (direction === 'down') {
+        snake.unshift({x: snakeHeadX, y: snakeHeadY + 1});
       }
       
-    }, 500);
+      (snakeHeadX === food.x && snakeHeadY === food.y) ? this.foodPos() : snake.pop();
+      this.setState({ snake });
+    }, period);
   }
 
   pause() {
@@ -117,29 +131,79 @@ class App extends Component {
     }
   }
 
+  // 重新开始
   handleResume() {
     this.setState({
-      btnText: '开始',
+      isTatrt: false,
       direction: null,
+      over: false,
+      period: 1000,
+      chooseArr: [0, 0, 0, 0],
       snake: [{x: 6, y: 8}, {x: 5, y: 8}, {x: 4, y: 8}],
-      food: {x: 10, y: 8}
+      food: {x: 19, y: 12}
     }, () => clearInterval(this.timer));
   }
-  
+
+  // 选择难度
+
+  chooseSpeed(speed) {
+    const { isTatrt } = this.state;
+    if (isTatrt) {
+      console.log(`游戏中不能更换'交通工具'哦～`);
+      return;
+    }
+    let count = 0;
+    switch (speed) {
+      case 800:
+        count = 0;
+        break;
+      case 600:
+        count = 1;
+        break;
+      case 400:
+        count = 2;
+        break;
+      case 200:
+        count = 3;
+        break;
+    }
+
+    this.setState({ period: speed, chooseArr: [0, 0, 0, 0] }, () => {
+      const newArr = [0, 0, 0, 0];
+      newArr[count] = 1;
+      this.setState({ chooseArr: newArr });
+    });
+  }
+
   render() {
-    const { state } = this;
+    const { chooseArr } = this.state;
 
     return (
       <div className="app-container">
       <div className="app-header">愤怒的贪吃蛇，biubiubiu～～～</div>
-      <CanvasArea {...state} />
-      <button onClick={this.start}>开始</button>
-      <button onClick={this.pause}>暂停</button>
-      <button onClick={() => this.handleMoveUp('up')}>上</button>
-      <button onClick={() => this.handleMoveRight('right')}>右</button>
-      <button onClick={() => this.handleMoveDown('down')}>下</button>
-      <button onClick={() => this.handleMoveLeft('left')}>左</button>
-      <button onClick={this.handleResume}>重新开始</button>
+      <CanvasArea {...this.state} />
+      <div className="control-area">
+        <div className="other-handle">
+          <button className="start" onClick={this.start}>开始游戏</button>
+          <button className="pause" onClick={this.pause}>暂停按钮</button>
+          <button className="restart" onClick={this.handleResume}>复位按钮</button>
+        </div>
+        <div className="difficulty">
+          <div className="choose">选择难度</div>
+          <div className="btn">
+            <button onClick={() => this.chooseSpeed(800)} className={chooseArr[0] ? "actived" : null}>我要步行</button>
+            <button onClick={() => this.chooseSpeed(600)} className={chooseArr[1] ? "actived" : null}>自行车</button>
+            <button onClick={() => this.chooseSpeed(400)} className={chooseArr[2] ? "actived" : null}>我要汽车</button>
+            <button onClick={() => this.chooseSpeed(200)} className={chooseArr[3] ? "actived" : null}>我要上天</button>
+          </div>
+        </div>
+        <div className="direction">
+          <button onClick={() => this.handleMoveUp('up')}>向上</button>
+          <button onClick={() => this.handleMoveLeft('left')}>向左</button>
+          <button onClick={() => this.handleMoveDown('down')}>向下</button>
+          <button onClick={() => this.handleMoveRight('right')}>向右</button>
+        </div>
+      </div>
     </div>
     );
   }
