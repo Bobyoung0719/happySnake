@@ -54,7 +54,7 @@
   text-align: center;
   box-shadow: 0px 4px 10px #14421A;
 }
-.direction button:hover{
+.control-area button:hover{
   cursor: pointer;
 }
 
