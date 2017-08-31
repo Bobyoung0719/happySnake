@@ -26,6 +26,10 @@ class App extends Component {
     this.handleResume = this.handleResume.bind(this);
   }
 
+  componentDidMount () {
+    clearInterval(this.timer);
+  }
+
   // 开始
   start() {
     const { snake, food, direction, isTatrt, period } = this.state;
